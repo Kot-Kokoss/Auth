@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { registration } from '../http/userApi';
 
 const Reg = () => {
   const [popup, setPopup] = React.useState(false);
@@ -9,6 +10,11 @@ const Reg = () => {
   const [Login, setLogin] = React.useState('');
   const [Password, setPassword] = React.useState('');
   const [PasswordAgain, setPasswordAgain] = React.useState('');
+
+  const signIn = async (email, login, password) => {
+    const res = await registration(email, login, password);
+    console.log(res);
+  };
 
   const checkReg = (login, pass1, pass2) => {
     let passLen = pass1.length;
@@ -25,6 +31,7 @@ const Reg = () => {
           if (!email.includes('@')) {
             setNotice('Некорректный адрес почты');
           } else {
+            signIn(email, login, pass1);
             setPopup(true);
           }
         }
