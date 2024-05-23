@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import setIsAuth from '../store/userStore';
 const Header = observer(() => {
   const { user } = React.useContext(Context);
+
   return (
     <>
       <header className="header">

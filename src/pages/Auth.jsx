@@ -1,15 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { loginFunc } from '../http/userApi';
+import { observer } from 'mobx-react-lite';
+import { Context } from '../index';
 
-const Auth = () => {
+const Auth = observer(() => {
+  const { user } = React.useContext(Context);
   const [notice, setNotice] = React.useState('');
   const [Login, setLogin] = React.useState('');
   const [Password, setPassword] = React.useState('');
 
   const signIn = async (login, password) => {
-    const res = await loginFunc(login, password);
-    console.log(res);
+    try {
+      const res = await loginFunc(login, password);
+      console.log(res);
+      let data = res;
+      user.setUser(data);
+      user.setIsAuth(true);
+    } catch (error) {
+      alert(error.response.data.message);
+    }
   };
 
   const SignHandler = (login, pass) => {
@@ -63,6 +73,6 @@ const Auth = () => {
       </div>
     </>
   );
-};
+});
 
 export default Auth;
