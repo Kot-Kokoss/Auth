@@ -2,38 +2,56 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Auth = () => {
+  const [notice, setNotice] = React.useState('');
   const [Login, setLogin] = React.useState('');
   const [Password, setPassword] = React.useState('');
-  const SignHandler = (value) => {
-    alert(value);
+
+  const SignHandler = (login, pass) => {
+    checkReg(login, pass);
   };
 
-  const handleLogin = (e) => {
-    setLogin(e.target.value);
-  };
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
+  const checkReg = (login, pass) => {
+    let passLen = pass.length;
+    let loginLen = login.length;
+    if (loginLen < 4) {
+      setNotice('Длина логина от 4 символов');
+    } else {
+      if (passLen < 8) {
+        setNotice('Длина пароля от 8 символов');
+      } else {
+        alert('Успешно');
+      }
+    }
   };
 
   return (
     <>
-      <h1 className="auth__title">Авторизация</h1>
-      <div className="auth__inputGroup">
+      <h1 className="content__title">Авторизация</h1>
+      <div className="authGroup">
         <input
-          onChange={handleLogin}
-          className="auth_inputItem"
+          onChange={(e) => setLogin(e.target.value)}
+          className="authItem"
           placeholder="Логин"
           value={Login}
         />
         <input
-          onChange={handlePassword}
-          className="auth_inputItem"
+          onChange={(e) => setPassword(e.target.value)}
+          className="authItem"
           placeholder="Пароль"
           value={Password}
+          type="password"
         />
-        <Link to="reset">Забыли пароль?</Link>
+        <h3 className="notice">{notice}</h3>
+        <div className="links">
+          <Link to="reset" className="content__info">
+            Забыли пароль?
+          </Link>
+          <Link to="registration" className="content__info">
+            Зарегистрироваться
+          </Link>
+        </div>
       </div>
-      <div className="button--black" onClick={() => SignHandler(Login)}>
+      <div className="button--black" onClick={() => SignHandler(Login, Password)}>
         Войти
       </div>
     </>

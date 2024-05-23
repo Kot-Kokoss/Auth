@@ -1,12 +1,13 @@
 import React from 'react';
-import ErrorItem from '../components/ErrorItem';
+import { Link } from 'react-router-dom';
 
 const Error = () => {
   return (
     <>
-      <div className="content">
-        <ErrorItem />
-      </div>
+      <h2>Страница не найдена</h2>
+      <Link to="/" className="content__info">
+        Вернуться на главную
+      </Link>
     </>
   );
 };
