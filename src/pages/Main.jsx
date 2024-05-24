@@ -14,9 +14,9 @@ const Auth = observer(() => {
     <>
       <h1 className="content__title">Часть приложения для авторизованных</h1>
       <div className="authGroup">
-        <h3 className="notice">Ура </h3>
+        <h3 className="notice">Теперь можно работать! </h3>
       </div>
-      <Link to="/" className="button--black" onClick={() => logout()}>
+      <Link to="/" className="button--black__1" onClick={() => logout()}>
         Выйти
       </Link>
     </>

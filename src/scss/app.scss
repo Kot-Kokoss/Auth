@@ -87,7 +87,19 @@ body {
     }
   }
 }
-
+.button--black__1 {
+  text-align: center;
+  color: white;
+  padding: 12px 0 14px;
+  width: 300px;
+  font-weight: 600;
+  font-size: 18px;
+  background-color: black;
+  border-radius: 10px;
+  &:hover {
+    opacity: 85%;
+  }
+}
 .header {
   background-color: white;
   height: 90px;
