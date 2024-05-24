@@ -13,7 +13,6 @@ function App() {
 
   return (
     <>
-      {/* <Header /> */}
       <div className="wrapper">
         <div className="content">
           <Routes>
