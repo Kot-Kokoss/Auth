@@ -12,13 +12,13 @@ const Auth = observer(() => {
 
   const signIn = async (login, password) => {
     try {
-      const res = await loginFunc(login, password);
-      console.log(res);
-      let data = res;
+      const data = await loginFunc(login, password);
+      console.log(data);
       user.setUser(data);
       user.setIsAuth(true);
-    } catch (error) {
-      alert(error.response.data.message);
+      setNotice('Вход выполнен');
+    } catch (e) {
+      setNotice(e.response.data.message);
     }
   };
 
@@ -36,7 +36,6 @@ const Auth = observer(() => {
         setNotice('Длина пароля от 8 символов');
       } else {
         signIn(login, pass);
-        alert('Успешно');
       }
     }
   };
@@ -68,9 +67,15 @@ const Auth = observer(() => {
           </Link>
         </div>
       </div>
-      <div className="button--black" onClick={() => SignHandler(Login, Password)}>
-        Войти
-      </div>
+      {notice === 'Вход выполнен' ? (
+        <Link to="/main" className="button--black">
+          Перейти к работе
+        </Link>
+      ) : (
+        <div className="button--black" onClick={() => SignHandler(Login, Password)}>
+          Войти
+        </div>
+      )}
     </>
   );
 });

@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { change } from '../http/userApi';
+import { observer } from 'mobx-react-lite';
+import { Context } from '../index';
 
-const Reset = () => {
+const Reset = observer(() => {
+  const { user } = React.useContext(Context);
   const [popup, setPopup] = React.useState(false);
   const [notice, setNotice] = React.useState('');
 
@@ -11,12 +14,18 @@ const Reset = () => {
   const [Password, setPassword] = React.useState('');
   const [PasswordAgain, setPasswordAgain] = React.useState('');
 
-  const changePass = async (email, login, password) => {
-    const res = await change(email, login, password);
-    console.log(res);
+  const changePass = async (login, email, password) => {
+    try {
+      const data = await change(login, email, password);
+      console.log(data);
+      user.setUser(data);
+      setPopup(true);
+    } catch (e) {
+      setNotice(e.response.data.message);
+    }
   };
 
-  const checkReg = (email, login, pass1, pass2) => {
+  const checkReg = (login, email, pass1, pass2) => {
     let passLen = pass1.length;
     let loginLen = login.length;
     if (loginLen < 4) {
@@ -31,8 +40,7 @@ const Reset = () => {
           if (!email.includes('@')) {
             setNotice('Некорректный адрес почты');
           } else {
-            changePass(email, login, pass1);
-            setPopup(true);
+            changePass(login, email, pass1);
           }
         }
       }
@@ -86,13 +94,13 @@ const Reset = () => {
           </div>
           <div
             className="button--black"
-            onClick={() => checkReg(email, Login, Password, PasswordAgain)}>
+            onClick={() => checkReg(Login, email, Password, PasswordAgain)}>
             Изменить
           </div>
         </>
       )}
     </>
   );
-};
+});
 
 export default Reset;

@@ -1,6 +1,6 @@
 import './scss/app.scss';
 import React from 'react';
-// import Header from './component/Header.jsx';
+import Main from './pages/Main.jsx';
 import Reg from './pages/Reg.jsx';
 import Reset from './pages/Reset.jsx';
 import Auth from './pages/Auth.jsx';
@@ -20,7 +20,7 @@ function App() {
             <Route path="/" element={<Auth />}></Route>
             <Route path="/registration" element={<Reg />}></Route>
             <Route path="/reset" element={<Reset />}></Route>
-            {/* <Route path="/main" element={<Main />}></Route> */}
+            <Route path="/main" element={<Main />}></Route>
             <Route path="*" element={<Error />}></Route>
           </Routes>
         </div>

@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { registration } from '../http/userApi';
+import { observer } from 'mobx-react-lite';
+import { Context } from '../index';
 
-const Reg = () => {
+const Reg = observer(() => {
+  const { user } = React.useContext(Context);
   const [popup, setPopup] = React.useState(false);
   const [notice, setNotice] = React.useState('');
 
@@ -11,9 +14,20 @@ const Reg = () => {
   const [Password, setPassword] = React.useState('');
   const [PasswordAgain, setPasswordAgain] = React.useState('');
 
-  const signIn = async (email, login, password) => {
-    const res = await registration(email, login, password);
-    console.log(res);
+  const Registr = async (login, email, password) => {
+    try {
+      const data = await registration(login, email, password);
+      console.log(data);
+      user.setUser(data);
+    } catch (e) {
+      if (e.response && e.response.data) {
+        setNotice(e.response.data.message);
+      } else {
+        // Обработка ошибки, если данные не определены
+        console.error(e);
+        setPopup(true);
+      }
+    }
   };
 
   const checkReg = (login, pass1, pass2) => {
@@ -31,8 +45,7 @@ const Reg = () => {
           if (!email.includes('@')) {
             setNotice('Некорректный адрес почты');
           } else {
-            signIn(email, login, pass1);
-            setPopup(true);
+            Registr(login, email, pass1);
           }
         }
       }
@@ -91,6 +104,6 @@ const Reg = () => {
       )}
     </>
   );
-};
+});
 
 export default Reg;
